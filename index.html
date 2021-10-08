@@ -397,7 +397,7 @@ drone.on('open', error => {
       addMessageToListDOM(text, member);
       if (document.visibilityState !== "visible" && hasread == false) {
         notification = new Notification('New Messages!')
-        new Audio('button-09a.mp3').play()
+        new Audio('audio/button-09a.mp3').play()
         document.addEventListener('visibilitychange', function() {if (document.visibilityState === 'visible') {notification.close()}})
         hasread=true
         setTimeout(function() {hasread = false}, 5000)
@@ -892,7 +892,7 @@ function createMessageElement(text, member) {
     stringy += (": " + bbbb+date.getMinutes() + " AM")
     text += stringy
   }
-  new Audio('button-3.mp3').play()
+  new Audio('audio/button-3.mp3').play()
   var messageLOLLL = document.createElement(sizerr)
   messageLOLLL.innerHTML = text
   messageLOLLL.style.display = "inline"
