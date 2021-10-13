@@ -352,9 +352,6 @@ drone.on('open', error => {
   const banana_thing = { id: 'BPS5hV64M8', clientData: { name: '[Bot]_BananaGod', color: '#ffe135'}}
   const History_Bot = { id: 'aaaaaaaaaaaa', clientData: {name: '[Bot]_History', color: '#146811'}}
   room.on('member_join', member => {
-    if (eatBeans(member)) {
-      member = eatBeans(member)
-    }
     members.push(member);
     updateMembersDOM();
     addMessageToListDOM(member.clientData.name + " has joined.", server_thing)
@@ -425,18 +422,6 @@ function arrayRemove(arr, value) {
   });
 }
 function eatBeans(member) {
-  var ccccbbbb = 0
-  for (let i = 0; i < members.length; i++) {
-    if (member.clientData.name == members[i].clientData.name) {
-      ccccbbbb += 1
-    }
-  }
-  if (ccccbbbb >= 2) {
-    member.clientData.name += "_"
-    return member
-  } else {
-    return false
-  }
 }
 function colorMaker(color) {
   return function() {
