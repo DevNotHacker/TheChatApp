@@ -1,3 +1,49 @@
+const urlparams = new URLSearchParams(window.location.search)
+document.getElementById("choosetextsize").onchange = function(){
+	document.getElementById('textsizepreview').outerHTML = `<${document.getElementById("choosetextsize").value} id='textsizepreview' style='usercolor: black !important;'>The Quick Brown Fox Jumped Over The Lazy Dog</${ document.getElementById("choosetextsize").value }>`
+}
+var autoemoji = true;
+var isbgred;
+var isbgyellow;
+var isbgregular;
+var isbggreen;
+var isbgsnowy;
+var isbgdark;
+// This form validation thing is a wip
+// coolio
+/*document.getElementById("question_form").onsubmit = function(e){
+	//e.preventDefault()
+	let data = new FormData(document.getElementById("question_form"))
+	if (data.get("username").length < 3 || data.get("username").length > 20){
+		document.getElementById("quername").setCustomValidity("Must more than 3 characters and less than 20 characters long")
+	}
+	else if (!username.trim().length){
+		document.getElementById("quername").setCustomValidity("Username cannot be completely whitespace")
+	}
+	document.getElementById("question_form").reportValidity()
+	return false
+}*/
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+if (urlparams.get("username")){
+	document.getElementById("questions").remove()
+	startingUsername();
+	if (getCookie("bg")){
+		document.getElementById(getCookie("bg")).click()
+	}
+} //andrew uh can you URL encode the clientData.typestaff too? whats clientData.typestaff? its basically member.clientData.typeStaff which is uh like MainDev or Head_Admin or VIP_Admin oh so save the login data? Like keep me logged in , yeah so rn it only save that ur staff, it doesn't save your position as staff- Ook, I'll try thxx
 var notification;
 var hasread = false;
 function checkNotificationPromise() {
@@ -70,110 +116,110 @@ document.onkeydown = function (e) {
 };
 
 const CLIENT_ID = "3vtDIC1I1BTFfW66";
-var sheeeesh;
+var username;
 var selfStaff;
 var placerthingg;
-var selfStaff;
 var sheeeeeeeesh;
 var breh;
 
 var sizerr;
+//better variable names :D
 function startingUsername() {
-	sheeeesh = prompt("What is your username? For random username say random.");
-	if (sheeeesh === null) {
+	username = decodeURIComponent(urlparams.get("username"))
+	if (username === null) {
 		alert("Not a valid username.");
 		startingUsername();
 	}
 
-	sheeeesh = sheeeesh.toString();
-	placerthingg = !sheeeesh.trim().length;
+	username = username.toString();
+	/*placerthingg = !username.trim().length;
 	if (placerthingg == true) {
 		alert("Not a valid username.");
 		startingUsername();
 	}
 
-	if (sheeeesh.length < 3) {
+	if (username.length < 3) {
 		alert("Username must be at least 3 characters long");
 		startingUsername();
-	} else if (sheeeesh.length > 20) {
+	} else if (username.length > 20) {
 		alert("Username must be less than 20 characters long.");
 		startingUsername();
-	}
+	}*/
 
-	sheeeesh = sheeeesh.replaceAll("[Staff]", "");
-	sheeeesh = sheeeesh.replaceAll("[Head_Admin]", "");
-	sheeeesh = sheeeesh.replaceAll("[Main_Dev]", "");
-	sheeeesh = sheeeesh.replaceAll("[VIP_Admin]", "");
-	sheeeesh = sheeeesh.replaceAll("[Banana]", "");
-	if (sheeeesh.includes("You:") || sheeeesh.includes("dumb")) {
+	username = username.replaceAll("[Staff]", "");
+	username = username.replaceAll("[Head_Admin]", "");
+	username = username.replaceAll("[Main_Dev]", "");
+	username = username.replaceAll("[VIP_Admin]", "");
+	username = username.replaceAll("[Banana]", "");
+	if (username.includes("You:") || username.includes("dumb")) {
 		startingUsername();
 	}
 
-	if (sheeeesh.includes("[Bot]")) {
+	if (username.includes("[Bot]")) {
 		var meee = prompt("bot password: ");
 		if (meee !== "replit.com/@CookieSnowOwl/TheChatApp") {
-			sheeeesh = sheeeesh.replaceAll("[Bot]", "");
+			username = username.replaceAll("[Bot]", "");
 		}
 	}
 
-	sheeeesh = sheeeesh.trim();
-	if (sheeeesh == "" || sheeeesh.length > 19) {
+	username = username.trim();
+	if (username == "" || username.length > 19) {
 		alert("Not a valid username.");
 		startingUsername();
 	}
 
-	sheeeesh = sheeeesh.replaceAll(" ", "_");
-	sheeeeesh = prompt("Are you an admin? Yes or No").toLowerCase();
-	var sheeeeeeesh = prompt("What color?(hex) if random, say random").toString();
-	if (sheeeeeeesh.toLowerCase() != "random") {
-		sheeeeeeeesh = sheeeeeeesh;
+	username = username.replaceAll(" ", "_");
+	sheeeeesh = decodeURIComponent(urlparams.get("admin"))
+	var usercolor = decodeURIComponent(urlparams.get("color"))
+	if (usercolor.toLowerCase() != "random") {
+		sheeeeeeeesh = usercolor;
 	} else {
-		sheeeeeeeesh = getRandomColor();
+		sheeeeeeeesh = getRandomusercolor();
 	}
 
 	if (sheeeeesh == "yes") {
 		sheeeeeesh = prompt("What is admin password?").toString();
 		if (sheeeeeesh == adminPassword) {
 			selfStaff = true;
-			if (sheeeesh == "MainDev") {
+			if (username == "MainDev") {
 				var breeh = prompt("MainDev password please:").toString();
 				if (breeh != maindevPassword) {
 					alert("incorrect.");
 					startingUsername();
 				} else {
-					sheeeesh = "[Main_Dev] " + sheeeesh;
+					username = "[Main_Dev] " + username;
 					breh = "Main_Dev";
 				}
-			} else if (sheeeesh == "timmy") {
+			} else if (username == "timmy") {
 				var breeh = prompt("timmy password please:").toString();
 				if (breeh != timmyPassword) {
 					alert("incorrect");
 					startingUsername();
 				}
 
-				sheeeesh = "[Head_Admin] " + sheeeesh;
+				username = "[Head_Admin] " + username;
 				breh = "Head_Admin";
-			} else if (sheeeesh == "Jeffr3y") {
+			} else if (username == "Jeffr3y") {
 				var breeh = prompt("Jeffr3y password please:").toString();
 				if (breeh != jeffr3yPassword) {
 					alert("incorrect");
 					startingUsername();
 				}
 
-				sheeeesh = "[Banana] " + sheeeesh;
+				username = "[Banana] " + username;
 				breh = "Banana";
 				sheeeeeeeesh = "#ffe135";
-			} else if (sheeeesh == "Evan") {
+			} else if (username == "Evan") {
 				var breeh = prompt("Evan password please:").toString();
 				if (breeh != evanPassword) {
 					alert("incorrect");
 					startingUsername();
 				}
 
-				sheeeesh = "[VIP_Admin] " + sheeeesh;
+				username = "[VIP_Admin] " + username;
 				breh = "VIP_Admin";
 			} else {
-				sheeeesh = "[Staff] " + sheeeesh;
+				username = "[Staff] " + username;
 				breh = "Staff";
 			}
 		} else {
@@ -185,52 +231,25 @@ function startingUsername() {
 		breh = "normie";
 	} else {
 		alert("what can that mean?");
-		startingUsername();
+		//startingUsername();
 	}
 
-	var Meow = prompt(
-		"size of text? number from 1-6, with 6 being smallest and 1 being biggest."
-	);
-	switch (Meow) {
-		case "1":
-			sizerr = "h1";
-			break;
-		case "2":
-			sizerr = "h2";
-			break;
-		case "3":
-			sizerr = "h3";
-			break;
-		case "4":
-			sizerr = "h4";
-			break;
-		case "5":
-			sizerr = "h5";
-			break;
-		case "6":
-			sizerr = "h6";
-			break;
-		default:
-			alert("What can that mean?");
-			startingUsername();
-			break;
-	}
+	sizerr = decodeURIComponent(urlparams.get("textsize"))
 }
 
-startingUsername();
-if (sheeeesh.toUpperCase() == "RANDOM") {
+if (username.toUpperCase() == "RANDOM") {
 	var sike = getRandomName();
 	sike = sike.replaceAll(" ", "_");
 } else {
-	sheeeesh = sheeeesh.replaceAll(" ", "_");
-	var sike = sheeeesh;
+	username = username.replaceAll(" ", "_");
+	var sike = username;
 }
 
 var drone = new ScaleDrone(CLIENT_ID, {
 	data: {
 		// Will be sent out as clientData via events
 		name: sike,
-		color: sheeeeeeeesh,
+		usercolor: sheeeeeeeesh,
 		isStaff: selfStaff,
 		typeStaff: breh,
 	},
@@ -240,7 +259,7 @@ const revenge = {
 	id: "BPS7fV64M8",
 	clientData: {
 		name: "[Bot]_Revenge",
-		color: "#660000",
+		usercolor: "#660000",
 		isStaff: "true",
 	},
 };
@@ -275,7 +294,7 @@ drone.on("open", (error) => {
 		id: "BPS7fV64M7",
 		clientData: {
 			name: "[Bot]_Server",
-			color: "#146811",
+			usercolor: "#146811",
 		},
 	};
 
@@ -283,7 +302,7 @@ drone.on("open", (error) => {
 		id: "BPS5hV64M8",
 		clientData: {
 			name: "[Bot]_BananaGod",
-			color: "#ffe135",
+			usercolor: "#ffe135",
 		},
 	};
 
@@ -291,7 +310,7 @@ drone.on("open", (error) => {
 		id: "aaaaaaaaaaaa",
 		clientData: {
 			name: "[Bot]_History",
-			color: "#146811",
+			usercolor: "#146811",
 		},
 	};
 
@@ -380,24 +399,36 @@ function arrayRemove(arr, value) {
 
 function eatBeans(member) {}
 
-function colorMaker(color) {
-	return function () {
-		document.body.style.backgroundColor = color;
-		document.body.style.color = "black";
-	};
+function usercolorMaker(usercolor, textcolor="black") {
+	return function(){
+		document.body.style.backgroundColor = usercolor;
+		document.body.style.color = textcolor;
+	}
 }
 
 //closure function
-var backgroundGreen = colorMaker("green");
-var backgroundRed = colorMaker("lightcoral");
-var backgroundBlue = colorMaker("powderblue");
-var backgroundYellow = colorMaker("yellow");
-var backgroundGrey = colorMaker("whitesmoke");
-function backgroundBlack() {
-	document.body.style.backgroundColor = "black";
-	document.body.style.color = "white";
+var backgroundGreen = usercolorMaker("mediumseagreen");
+var backgroundRed = usercolorMaker("lightcoral");
+var backgroundBlue = usercolorMaker("powderblue");
+var backgroundYellow = usercolorMaker("palegoldenrod");
+var backgroundGrey = usercolorMaker("whitesmoke");
+var backgroundBlack = usercolorMaker("black", "white")
+/*var isbgred;
+var isbgyellow;
+var isbgregular;
+var isbggreen;
+var isbgsnowy;
+var isbgdark;*/
+function bgActive() {
+  let colorActive;
+  if (isbgred) {
+    isbgred = false
+  } else if (isbgyellow) {
+    isbgyellow = false
+  } else if (isbgregular) {
+    
+  }
 }
-
 function getRandomName() {
 	const adjs = [
 		"autumn",
@@ -538,7 +569,7 @@ function getRandomName() {
 	);
 }
 
-function getRandomColor() {
+function getRandomusercolor() {
 	var lum = -0.25;
 	var hex = String(
 		"#" + Math.random().toString(16).slice(2, 8).toUpperCase()
@@ -594,21 +625,22 @@ function sendMessage() {
 }
 
 function createMemberElement(member) {
-	const { name, color } = member.clientData;
+	const { name, usercolor } = member.clientData;
 	const el = document.createElement("div");
 	el.appendChild(document.createTextNode(name));
 	el.className = "member";
-	el.style.color = color;
+	el.style.usercolor = usercolor;
 	return el;
 }
 
 function updateMembersDOM() {
-	DOM.membersCount.innerText = `$ {
+	/*DOM.membersCount.innerText = `${
     members.length
-  }
+  } members are online.
+  `;*/
+  DOM.membersList.innerHTML = `<h1 style="color: black !important;margin:8px 0px;">There are ${members.length} members online:</h1>
 
-  users in the chat:`;
-	DOM.membersList.innerHTML = "";
+  `//hi lol i was gonna fix this and realized u were here haha imma go fix the backgrounds bar and the commands and rules :D ok
 	members.forEach((member) =>
 		DOM.membersList.appendChild(createMemberElement(member))
 	);
@@ -646,7 +678,7 @@ function createMessageElement(text, member) {
 			id: "BPS7fV64M7",
 			clientData: {
 				name: "[Bot]_Server",
-				color: "#146811",
+				usercolor: "#146811",
 			},
 		};
 
@@ -714,17 +746,6 @@ function createMessageElement(text, member) {
 	}
 
 	text = text.trim();
-	if (text.includes("/img")) {
-		if (text.split(" ").length == 2) {
-			text = text.replace("/img", "");
-			text = "<img src='" + text + "'>";
-			var disableLink = true;
-		} else {
-			var disableLink = false;
-		}
-	} else {
-		var disableLink = false;
-	}
 
 	if (!text.includes("/beansbelike ")) {
 		if (text.includes("/kick ")) {
@@ -787,7 +808,7 @@ function createMessageElement(text, member) {
 				id: "nsyoxuiH5u",
 				clientData: {
 					name: membeer,
-					color: coloor,
+					usercolor: coloor,
 					isStaff: true,
 					typeStaff: "Bot",
 				},
@@ -834,7 +855,7 @@ function createMessageElement(text, member) {
 				id: "eWh1k3sgAB",
 				clientData: {
 					name: "[Bot_God]_BananaGod",
-					color: "#ffe135",
+					usercolor: "#ffe135",
 				},
 			};
 
@@ -888,8 +909,8 @@ function createMessageElement(text, member) {
 			text = chickennn;
 		}
 
-		if (text.includes("/colorchangehex ")) {
-			text = text.replaceAll("/colorchangehex ", "");
+		if (text.includes("/usercolorchangehex ")) {
+			text = text.replaceAll("/usercolorchangehex ", "");
 			if (
 				!(
 					member.clientData.typeStaff === "Main_Dev" ||
@@ -901,7 +922,7 @@ function createMessageElement(text, member) {
 				}
 			}
 
-			var newColor = text;
+			var newusercolor = text;
 			var c = -1;
 
 			for (let iiii = 0; iiii < members.length; iiii++) {
@@ -910,7 +931,7 @@ function createMessageElement(text, member) {
 				}
 			}
 
-			members[c].clientData.color = text;
+			members[c].clientData.usercolor = text;
 			return;
 		}
 
@@ -950,7 +971,7 @@ function createMessageElement(text, member) {
 				id: "BPS7fV64M7",
 				clientData: {
 					name: "[Bot]_Server",
-					color: "#146811",
+					usercolor: "#146811",
 				},
 			};
 
@@ -989,7 +1010,7 @@ function createMessageElement(text, member) {
 				id: "BPS7fV64M7",
 				clientData: {
 					name: "[Bot]_Server",
-					color: "#146811",
+					usercolor: "#146811",
 				},
 			};
 		}
@@ -999,35 +1020,36 @@ function createMessageElement(text, member) {
 
 	const el = document.createElement("div");
 	el.appendChild(createMemberElement(member));
+  if (autoemoji === true) {
+    text = text.replaceAll(">:(", "😠");
+    text = text.replaceAll(">:)", "😈");
+    if (text.includes(":)")) {
+      text = text.replaceAll(":)", "😀");
+    }
 
-	text = text.replaceAll(">:(", "😠");
-	text = text.replaceAll(">:)", "😈");
-	if (text.includes(":)")) {
-		text = text.replaceAll(":)", "😀");
-	}
+    if (text.includes(":D")) {
+      text = text.replaceAll(":D", "😁");
+    }
 
-	if (text.includes(":D")) {
-		text = text.replaceAll(":D", "😁");
-	}
-
-	textt = text.toLowerCase();
-	text = text.replaceAll("^_^'", "😅");
-	text = text.replaceAll("xD", "😆");
-	text = text.replaceAll(":|", "😐");
-	text = text.replaceAll(":O", "😮");
-	text = text.replaceAll(":(", "🙁");
-	text = text.replaceAll(":s", "😖");
-	text = text.replaceAll(":P", "😛");
-	text = text.replaceAll(":ROFL:", "🤣");
-	text = text.replaceAll(":bye:", "👋");
-	text = text.replaceAll("$_$", "🤑");
-	text = text.replaceAll("B)", "😎");
-	text = text.replaceAll(";)", "😏");
-	text = text.replaceAll("<3", "🧡");
-	text = text.replaceAll(":poop:", "💩");
-	text = text.replaceAll(":'(", "😭");
-	text = text.replaceAll(":mindblown:", "🤯");
-	text = text.replaceAll(":freezing:", "🥶");
+    textt = text.toLowerCase();
+    text = text.replaceAll("^_^'", "😅");
+    text = text.replaceAll("xD", "😆");
+    text = text.replaceAll(":|", "😐");
+    text = text.replaceAll(":O", "😮");
+    text = text.replaceAll(":(", "🙁");
+    text = text.replaceAll(":s", "😖");
+    text = text.replaceAll(":P", "😛");
+    text = text.replaceAll(":ROFL:", "🤣");
+    text = text.replaceAll(":bye:", "👋");
+    text = text.replaceAll("$_$", "🤑");
+    text = text.replaceAll("B)", "😎");
+    text = text.replaceAll(";)", "😏");
+    text = text.replaceAll("<3", "🧡");
+    text = text.replaceAll(":poop:", "💩");
+    text = text.replaceAll(":'(", "😭");
+    text = text.replaceAll(":mindblown:", "🤯");
+    text = text.replaceAll(":freezing:", "🥶");
+  }
 	if (
 		textt.includes("fuck") ||
 		textt.includes("bitch") ||
@@ -1131,10 +1153,41 @@ function createMessageElement(text, member) {
 
 		text = newtext;
 	}
+  text = text.replaceAll("<", "&lt;")
+  text = text.replaceAll(">", "&gt;")
+  if (text.includes("/img")) {
+		if (text.split(" ").length == 2) {
+			text = text.replace("/img", "");
+			text = "<img src='" + text + "'>";
+			var disableLink = true;
+		} else {
+			var disableLink = false;
+		}
+	} else {
+		var disableLink = false;
+	}
+	if (text === "/themask") {
+		text =
+			'<iframe width="560" height="315" src="https://www.youtube.com/embed/Gp9gFXf56yQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+	}
 
-	console.log(text + "bruhhhhhh this is cool"); //end
-	var date = new Date();
-	var stringy = "";
+	if (text === "/lifeisfun") {
+		text =
+			'<iframe width="560" height="315" src="https://www.youtube.com/embed/CAb_bCtKuXg?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+	}
+
+	if (text === "/roadtrip") {
+		text =
+			'<iframe width="560" height="315" src="https://www.youtube.com/embed/Ow_PNMtMGhU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+	}
+
+	if (text === "/changemyclothes") {
+		text =
+			'<iframe width="560" height="315" src="https://www.youtube.com/embed/kxWUcCUfDuE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+	}
+	console.log(text); //end
+	var date = new Date()
+	var stringy = "<span style='float:right;'>";
 
 	if (date.getMinutes() < 10) {
 		var bbbb = "0";
@@ -1148,21 +1201,21 @@ function createMessageElement(text, member) {
 
 	if (date.getHours() > 12) {
 		stringy +=
-			"\u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 -sent at " +
-			(date.getHours() - 12);
+			"sent at " + (date.getHours() - 12);
 		stringy += ":" + bbbb + date.getMinutes() + " PM";
+		stringy += "</span>"
 		text += stringy;
 	} else if (date.getHours() == 12) {
 		stringy +=
-			"\u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 -sent at " +
-			date.getHours();
+			"sent at " + date.getHours();
 		stringy += ": " + bbbb + date.getMinutes() + " PM";
+		stringy += "</span>"
 		text += stringy;
 	} else {
 		stringy +=
-			"\u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 \u00A0 -sent at " +
-			date.getHours();
+			"sent at " + date.getHours();
 		stringy += ": " + bbbb + date.getMinutes() + " AM";
+		stringy += "</span>"
 		text += stringy;
 	}
 
@@ -1180,7 +1233,7 @@ function addMessageToListDOM(text, member) {
 		return;
 	}
 
-	const el = DOM.messages;
+	const el = document.body;
 
 	if (member.clientData.selfStaff) {
 		text = text.replaceAll("/sudo ", "");
@@ -1190,7 +1243,7 @@ function addMessageToListDOM(text, member) {
 	const wasTop = el.scrollTop === el.scrollHeight - el.clientHeight;
 
 	try {
-		el.appendChild(createMessageElement(text, member));
+		DOM.messages.appendChild(createMessageElement(text, member));
 	} catch {
 		return;
 	}
@@ -1198,6 +1251,7 @@ function addMessageToListDOM(text, member) {
 	if (wasTop) {
 		el.scrollTop = el.scrollHeight - el.clientHeight;
 	}
+	window.scrollTo(0, el.scrollHeight)
 }
 
 function leave() {
@@ -1206,4 +1260,13 @@ function leave() {
 	} catch {
 		location.href = "https://chathere.cookiesnowowl.repl.co";
 	}
+}
+function emojionoff() {
+  autoemoji = !autoemoji
+  let emojibutton = document.getElementById("emojibutton")
+  if (!autoemoji) {
+    emojibutton.innerHTML = "Turn auto-emoji on."
+  } else {
+    emojibutton.innerHTML = "Turn auto-emoji off."
+  }
 }

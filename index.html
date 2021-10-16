@@ -15,64 +15,105 @@
 	</head>
 
 	<body>
-		<h1 style="background-color: DodgerBlue; text-align: center">TheChatApp</h1>
-		<h3 style="background-color: DodgerBlue; text-align: center">
-			This is where you can chat :D Check the rules., Check out the discord !
-			<a href="https://discord.gg/B5Yn9FdR" target="_blank">Discord</a>Staff:
-			MainDev(Main Developer, matthew) HeadAdmin: Timothy Jeffr3y(moderator),
-			Idea-Creator: Eric
-		</h3>
-		<div class="members-count">-</div>
-		<div class="members-list">-</div>
-		<div class="messages"></div>
-		<form
-			class="message-form"
-			onsubmit="return false;"
-			oncontextmenu="return true"
-		>
-			<input
-				class="message-form__input"
-				placeholder="Type a message.."
-				type="text"
-				maxlength="100000"
-				contenteditable
-				spellcheck="true"
-			/><input class="message-form__button" value="Send" type="submit" />
-		</form>
-
-		<br /><a target="_blank" rel="noopener" href="desc.html" class="aaaa"
-			>Commands</a
-		><br /><a
-			target="_blank"
-			rel="noopener"
-			href="rules.html"
-			class="aaaa"
-			rel="noopener"
-			>Rules</a
-		><br /><br />
-		<div id="butttons">
-			<button class="abutton" onclick="backgroundRed()">Red Background</button
-			>&nbsp &nbsp &nbsp
-			<button class="abutton" onclick="backgroundYellow()">
-				Yellow Background</button
-			>&nbsp &nbsp &nbsp
-			<button class="abutton" onclick="backgroundBlue()">
-				Regular Background</button
-			>&nbsp &nbsp &nbsp
-			<button class="abutton" onclick="backgroundGreen()">
-				Green Background</button
-			>&nbsp &nbsp &nbsp
-			<button class="abutton" onclick="backgroundGrey()">
-				Snowy Background</button
-			>&nbsp &nbsp &nbsp
-			<button class="abutton" onclick="backgroundBlack()">Dark Mode</button>
+		<div id="questions" class="modal">
+			<div class="modal-content" style="text-align: center">
+				<h1>Wait!</h1>
+				<h3 id="beforeyoujoin">Before you join <i>TheChatApp</i>, please kindly complete the following form</h3>
+				<form action="/" id="question_form">
+					<label for="username">Username: </label>
+					<input type="text" required name="username" autocomplete="off" placeholder="Username" id="quername"><br>
+					<label for="admin">I am an admin: </label>
+					<select name="admin" id="qadmin" required>
+						<option value="yes">Yes</option>
+						<option value="no" selected>No</option>
+					</select>
+					<br>
+					<label for="color">User color: </label>
+					<input type="color" name="color" value="#000000" id="choosecolor" required>
+					<span onclick="document.getElementById('choosecolor').value = getRandomusercolor()" style="user-select: none;cursor: pointer;">Random</span>
+					<br>
+					<label for="textsize">Text Size: </label>
+					<select name="textsize" required id="choosetextsize">
+						<option value="h1" selected>1</option>
+						<option value="h2">2</option>
+						<option value="h3">3</option>
+						<option value="h4">4</option>
+						<option value="h5">5</option>
+						<option value="h6">6</option>
+					</select><br>
+					See what the selected text size looks like!<br>
+					<h1 id="textsizepreview">
+						The Quick Brown Fox Jumped Over The Lazy Dog
+					</h1>
+					<br>
+					<br>
+					<br>
+					<input type="submit">
+				</form>
+			</div>
 		</div>
-		<br /><br /><button onclick="leave()" class="looksnicesoyeah">Leave</button
-		><br /><br /><button
-			onclick="askNotificationPermission()"
-			class="looksnicesoyeah"
-		>
-			go dnd
-		</button>
-	<button>ody>
+		<aside>
+			<h1 style="text-align: center;">TheChatApp</h1>
+			<h3 style="text-align: center">
+				This is where you can chat :D <br>Check the rules., Check out the discord !
+				<a href="https://discord.gg/B5Yn9FdR" target="_blank">Discord</a><br>Staff:
+				MainDev(Main Developer, matthew) HeadAdmin: Timothy Jeffr3y(moderator),
+				Idea-Creator: Eric
+			</h3>
+			<div class="members-list">Loading</div>
+
+			<br /><a target="_blank" rel="noopener" href="desc.html" class="aaaa looksnicesoyeah"
+				>Commands</a
+			><br /><a
+				target="_blank"
+				rel="noopener"
+				href="rules.html"
+				class="aaaa looksnicesoyeah"
+				rel="noopener"
+				>Rules</a
+			><br /><br />
+			<div id="butttons">
+				<h1 style="color: black ">Theme:</h1>
+				<button class="abutton" id="bgred" onclick="backgroundRed();document.cookie = 'bg='+this.id+'; expires=31 Dec 3000 12:00:00 UTC; path=/';" style="--color:lightcoral;">Red</button>
+				<button class="abutton" id="bgyellow" onclick="backgroundYellow();document.cookie = 'bg='+this.id+'; expires=31 Dec 3000 12:00:00 UTC; path=/';" style="--color: palegoldenrod;">Yellow</button>
+				<button class="abutton" id="bgreg" onclick="backgroundBlue();document.cookie = 'bg='+this.id+'; expires=31 Dec 3000 12:00:00 UTC; path=/';" style="--color:powderblue;">Regular</button>
+
+				<button class="abutton" id="bggreen" onclick="backgroundGreen();document.cookie = 'bg='+this.id+'; expires=31 Dec 3000 12:00:00 UTC; path=/';" style="--color:mediumseagreen;">Green</button>
+
+				<button class="abutton" id="bgsnow" onclick="backgroundGrey();document.cookie = 'bg='+this.id+'; expires=31 Dec 3000 12:00:00 UTC; path=/';" style="--color:whitesmoke;">Snowy</button>
+
+				<button class="abutton" id="bgdark" onclick="backgroundBlack();document.cookie = 'bg='+this.id+'; expires=31 Dec 3000 12:00:00 UTC; path=/'; BlackbgStart()" style="--color:black;color: white;">Dark</button>
+			</div>
+			<br /><br /><button onclick="leave()" class="looksnicesoyeah">Leave</button
+			><br /><br /><button
+				onclick="emojionoff()"
+				class="looksnicesoyeah"
+		id="emojibutton">
+		Turn auto-emojies off.
+			</button>
+		</aside>
+
+
+		<div class="messages">
+			<!--<div id="loading">
+				<div class="loader"></div>
+				<br>
+				Loading Messages, please wait.
+			</div>-->
+			<form
+				class="message-form"
+				onsubmit="return false;"
+				oncontextmenu="return true"
+			>
+				<input
+					class="message-form__input"
+					placeholder="Type a message.."
+					type="text"
+					maxlength="100000"
+					contenteditable
+					spellcheck="true"
+				/><input class="message-form__button" value="Send" type="submit" />
+			</form>
+		</div>
+	</body>
 </html>
