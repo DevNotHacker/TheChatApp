@@ -403,6 +403,11 @@ function usercolorMaker(usercolor, textcolor="black") {
 	return function(){
 		document.body.style.backgroundColor = usercolor;
 		document.body.style.color = textcolor;
+		if (textcolor === "white"){
+			document.body.classList.add("dm")
+		}else{
+			document.body.classList.remove("dm")
+		}
 	}
 }
 
@@ -638,7 +643,7 @@ function updateMembersDOM() {
     members.length
   } members are online.
   `;*/
-  DOM.membersList.innerHTML = `<h1 style="color: black !important;margin:8px 0px;">There are ${members.length} members online:</h1>
+  DOM.membersList.innerHTML = `<h1 style="margin:8px 0px;">There are ${members.length} members online:</h1>
 
   `//hi lol i was gonna fix this and realized u were here haha imma go fix the backgrounds bar and the commands and rules :D ok
 	members.forEach((member) =>
@@ -1255,11 +1260,10 @@ function addMessageToListDOM(text, member) {
 }
 
 function leave() {
-	try {
-		window.close();
-	} catch {
-		location.href = "https://chathere.cookiesnowowl.repl.co";
-	}
+	window.close();
+	setTimeout(()=>{
+		location.search = ""
+	}, 1000)
 }
 function emojionoff() {
   autoemoji = !autoemoji
