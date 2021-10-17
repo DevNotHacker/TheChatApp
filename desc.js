@@ -29,6 +29,7 @@
     text = text.replaceAll(":freezing:", "🥶");
   }
 */
+//hi andrew
 const leDictionary = {
   ":)":"😀",
   ">:(":"😠",

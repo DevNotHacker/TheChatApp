@@ -652,44 +652,14 @@ function updateMembersDOM() {
 }
 
 function createMessageElement(text, member) {
+	text = text.replaceAll("<", "&lt;")
+	text = text.replaceAll(">", "&gt;") //that wasn't the problem
 	if (text === "/revenge" && member.clientData.typeStaff == "Main_Dev") {
 		member = revenge;
 		text =
 			"I am back. I am not dead. You may not see me... but I haunt you.<br>Hahahahhaa...";
 	}
 
-	if (text === "/themask") {
-		text =
-			'<iframe width="560" height="315" src="https://www.youtube.com/embed/Gp9gFXf56yQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-	}
-
-	if (text === "/lifeisfun") {
-		text =
-			'<iframe width="560" height="315" src="https://www.youtube.com/embed/CAb_bCtKuXg?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-	}
-
-	if (text === "/roadtrip") {
-		text =
-			'<iframe width="560" height="315" src="https://www.youtube.com/embed/Ow_PNMtMGhU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-	}
-
-	if (text === "/changemyclothes") {
-		text =
-			'<iframe width="560" height="315" src="https://www.youtube.com/embed/kxWUcCUfDuE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-	}
-
-	if (text === "/online") {
-		member = {
-			id: "BPS7fV64M7",
-			clientData: {
-				name: "[Bot]_Server",
-				usercolor: "#146811",
-			},
-		};
-
-		text = "";
-		members.forEach((memberd) => (text += memberd.clientData.name + "<br>"));
-	}
 
 	if (!member.clientData.isStaff) {
 		text = text
@@ -1158,8 +1128,6 @@ function createMessageElement(text, member) {
 
 		text = newtext;
 	}
-  text = text.replaceAll("<", "&lt;")
-  text = text.replaceAll(">", "&gt;")
   if (text.includes("/img")) {
 		if (text.split(" ").length == 2) {
 			text = text.replace("/img", "");
@@ -1189,6 +1157,18 @@ function createMessageElement(text, member) {
 	if (text === "/changemyclothes") {
 		text =
 			'<iframe width="560" height="315" src="https://www.youtube.com/embed/kxWUcCUfDuE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+	}
+  if (text === "/online") {
+	  member = {
+			id: "BPS7fV64M7",
+			clientData: {
+				name: "[Bot]_Server",
+				usercolor: "#146811",
+			},
+		};
+
+		text = "";
+		members.forEach((memberd) => (text += memberd.clientData.name + "<br>"));
 	}
 	console.log(text); //end
 	var date = new Date()
@@ -1234,7 +1214,7 @@ function createMessageElement(text, member) {
 }
 
 function addMessageToListDOM(text, member) {
-	if (text == "AdminPasswordBeLike123454321!@#$%$#@!") {
+	if (text == adminPassword) {
 		return;
 	}
 
