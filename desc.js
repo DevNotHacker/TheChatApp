@@ -65,21 +65,24 @@ function key(map){
 //expected output: testkey
 
 for (key in leDictionary){
-	document.body.innerHTML += `<button class="round" key="${key}" val="${leDictionary[key]}" keyorval="val">${leDictionary[key]}</button>&nbsp;&nbsp;&nbsp;&nbsp;`
+	document.body.innerHTML += `<button class="round icon" key="${key}" val="${leDictionary[key]}" keyorval="val">${leDictionary[key]}</button>`
 }
 
-document.querySelectorAll(".round").forEach(e=>{
+document.querySelectorAll(".icon").forEach(e=>{
 	e.onclick = function(){
 		if (this.getAttribute("keyorval") === "val"){
 			this.setAttribute("keyorval", "key")
 			this.innerHTML = this.getAttribute("key")
+      		this.style.backgroundColor = "#ECECEC"
 		}else{
 			this.setAttribute("keyorval", "val")
 			this.innerHTML = this.getAttribute("val")
+      		this.style.backgroundColor = "white"
 		}
 	}
 })
 //ayyyyyyy gj. hi. hi
+//new idea how about commands doesn't open in a new tab? oh wait that wouldn't work as well whatever its still on the board, though ??? so because it URI saves the login info sorta then you could open in same tab, but it just work as well rn because not all login info is saved, gtg eat dinner btw, k bye baiii
 
 /*function addComponent(idofbutton) {
   let thebutton = document.getElementById(idofbutton)
