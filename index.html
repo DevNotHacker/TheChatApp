@@ -22,12 +22,27 @@
 				<h3 id="beforeyoujoin">Before you join <i>TheChatApp</i>, please kindly complete the following form</h3>
 				<form action="/" id="question_form">
 					<label for="username">Username: </label>
-					<input type="text" required name="username" autocomplete="off" placeholder="Username" id="quername"><br>
+					<input type="text" required name="username" autocomplete="off" placeholder="Username" id="quername" onkeyup="validate()"><br>
 					<label for="admin">I am an admin: </label>
-					<select name="admin" id="qadmin" required>
+					<select name="admin" id="qadmin" required onchange="admindate()">
 						<option value="yes">Yes</option>
 						<option value="no" selected>No</option>
 					</select>
+					<div id="adminpswenter" class="hide" style="margin-left:100px;">
+						<label for="adminpsw">Admin Password: </label>
+						<input type="text" disabled required name="adminpsw" autocomplete="off" placeholder="Admin Password" id="qadminpsw" onkeyup="validate()"><br>
+						<!--<label for="adminname">My Name Is: </label>
+						<select name="adminname" id="qadminname" required disabled>
+							<option value="staff" selected>Staff</option>
+							<option value="MainDev">MainDev</option>
+							<option value="timmy" >timmy</option>
+							<option value="Jeffr3y" >Jeffr3y</option>
+							<option value="Evan" >Evan</option>
+						</select>-->
+						<br>
+						<label for="adminuserpsw">My Password Is: </label>
+						<input type="text" name="adminuserpsw" autocomplete="off" placeholder="Your Password" id="qadminuserpsw" onkeyup="validate()" disabled><br>
+					</div>
 					<br>
 					<label for="color">User color: </label>
 					<input type="color" name="color" value="#000000" id="choosecolor" required>
@@ -49,17 +64,20 @@
 					<br>
 					<br>
 					<br>
-					<input type="submit">
+					<input type="submit" disabled><br>
+					<b><span id="errmsg" style="color:red;font-size:18px;">Awaiting error message</span></b>
 				</form>
 			</div>
 		</div>
 		<aside>
-			<h1 style="text-align: center;font-size:36px;"><u>TheChatApp</u></h1>
-			<h3 style="text-align: center">
-				This is where you can chat :D <br>Check the rules., Check out the discord !
-				<a href="https://discord.gg/B5Yn9FdR" target="_blank">Discord</a><br>Staff:
-				MainDev(Main Developer, matthew) HeadAdmin: Timothy Jeffr3y(moderator),
-				Idea-Creator: Eric, Dev: Andrew
+			<h1 style="text-align: center;font-size:36px;margin:8px 0px 4px 0px"><u>TheChatApp</u></h1>
+			<h3 style="text-align: center;margin:2px 0px 18px 0px">
+				<i>A place where you can chat</i>
+				<br>
+				<br>
+				Check the rules., Check out the <a href="https://discord.gg/B5Yn9FdR" target="_blank" style="color: inherit;">Discord!</a><br>Staff:<br>
+				MainDev(Main Developer, matthew)<br>HeadAdmin: Timothy<br>Jeffr3y(moderator)<br>
+				Idea-Creator: Eric<br>Dev: Andrew
 			</h3>
 			<div class="members-list">Loading</div>
 
@@ -83,7 +101,7 @@
 
 				<button class="abutton" id="bgsnow" onclick="backgroundGrey();document.cookie = 'bg='+this.id+'; expires=31 Dec 3000 12:00:00 UTC; path=/';" style="--color:whitesmoke;">Snowy</button>
 
-				<button class="abutton" id="bgdark" onclick="backgroundBlack();document.cookie = 'bg='+this.id+'; expires=31 Dec 3000 12:00:00 UTC; path=/'; BlackbgStart()" style="--color:black;color: white;">Dark</button>
+				<button class="abutton" id="bgdark" onclick="backgroundBlack();document.cookie = 'bg='+this.id+'; expires=31 Dec 3000 12:00:00 UTC; path=/';" style="--color:black;color: white;">Dark</button>
 			</div>
 			<br /><br /><button onclick="leave()" class="looksnicesoyeah">Leave</button
 			><br /><br /><button

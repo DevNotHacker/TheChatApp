@@ -9,20 +9,49 @@ var isbgregular;
 var isbggreen;
 var isbgsnowy;
 var isbgdark;
-// This form validation thing is a wip
-// coolio
-/*document.getElementById("question_form").onsubmit = function(e){
-	//e.preventDefault()
-	let data = new FormData(document.getElementById("question_form"))
-	if (data.get("username").length < 3 || data.get("username").length > 20){
-		document.getElementById("quername").setCustomValidity("Must more than 3 characters and less than 20 characters long")
+
+function create_modal(text){
+	document.body.innerHTML += `
+	<div class="modal">
+		<div class="modal-content">
+			${text}
+			<button onclick="this.parentElement.parentElement.remove()">Close</button>
+		</div>
+	</div>
+	`
+}
+
+const validate = () => {
+	document.getElementById("quername").value = document.getElementById("quername").value.replaceAll(" ", "_").replace(/([a-zA-Z0-9_]+)|[^]/g, '$1');
+	let username = document.getElementById("quername").value
+	document.querySelector("#question_form input[type='submit']").disabled = true
+	if (username.length < 3 || username.length > 20){
+		document.getElementById("errmsg").innerHTML = "Username must be more than 3 characters and less than 20 characters long."
+	}else if (!username.trim().length){
+		document.getElementById("errmsg").innerHTML = "Username cannot be comprised of only whitespace."
+	}else if (username.toLowerCase().includes("you:") || username.toLowerCase().includes("dumb")){
+		document.getElementById("errmsg").innerHTML = "Username contains illegal word."
 	}
-	else if (!username.trim().length){
-		document.getElementById("quername").setCustomValidity("Username cannot be completely whitespace")
+	else{
+		document.querySelector("#question_form input[type='submit']").disabled = false
+		document.getElementById("errmsg").innerHTML = "-"
 	}
-	document.getElementById("question_form").reportValidity()
-	return false
-}*/
+}
+document.getElementById("qadmin").onchange = function(){
+	if (Array.from(document.getElementById("adminpswenter").classList).includes("hide")){
+		document.getElementById("adminpswenter").classList.remove("hide")
+		document.querySelectorAll("#adminpswenter input, #adminpswenter select").forEach(e=>{
+			e.disabled = false
+		})
+	}else{
+		document.getElementById("adminpswenter").classList.add("hide")
+		document.querySelectorAll("#adminpswenter input, #adminpswenter select").forEach(e=>{
+			e.disabled = true
+		})
+	}
+}
+
+
 function getCookie(cname) {
   let name = cname + "=";
   let ca = document.cookie.split(';');
@@ -119,7 +148,7 @@ const CLIENT_ID = "3vtDIC1I1BTFfW66";
 var username;
 var selfStaff;
 var placerthingg;
-var sheeeeeeeesh;
+var tobeusercolor;
 var breh;
 
 var sizerr;
@@ -169,20 +198,20 @@ function startingUsername() {
 	}
 
 	username = username.replaceAll(" ", "_");
-	sheeeeesh = decodeURIComponent(urlparams.get("admin"))
+	isadmin = decodeURIComponent(urlparams.get("admin"))
 	var usercolor = decodeURIComponent(urlparams.get("color"))
 	if (usercolor.toLowerCase() != "random") {
-		sheeeeeeeesh = usercolor;
+		tobeusercolor = usercolor;
 	} else {
-		sheeeeeeeesh = getRandomusercolor();
+		tobeusercolor = getRandomusercolor();
 	}
 
-	if (sheeeeesh == "yes") {
-		sheeeeeesh = prompt("What is admin password?").toString();
+	if (isadmin == "yes") {
+		sheeeeeesh = urlparams.get("adminpsw").toString();
 		if (sheeeeeesh == adminPassword) {
+			breeh = urlparams.get("adminuserpsw").toString()
 			selfStaff = true;
 			if (username == "MainDev") {
-				var breeh = prompt("MainDev password please:").toString();
 				if (breeh != maindevPassword) {
 					alert("incorrect.");
 					startingUsername();
@@ -191,7 +220,6 @@ function startingUsername() {
 					breh = "Main_Dev";
 				}
 			} else if (username == "timmy") {
-				var breeh = prompt("timmy password please:").toString();
 				if (breeh != timmyPassword) {
 					alert("incorrect");
 					startingUsername();
@@ -200,7 +228,6 @@ function startingUsername() {
 				username = "[Head_Admin] " + username;
 				breh = "Head_Admin";
 			} else if (username == "Jeffr3y") {
-				var breeh = prompt("Jeffr3y password please:").toString();
 				if (breeh != jeffr3yPassword) {
 					alert("incorrect");
 					startingUsername();
@@ -208,9 +235,8 @@ function startingUsername() {
 
 				username = "[Banana] " + username;
 				breh = "Banana";
-				sheeeeeeeesh = "#ffe135";
+				tobeusercolor = "#ffe135";
 			} else if (username == "Evan") {
-				var breeh = prompt("Evan password please:").toString();
 				if (breeh != evanPassword) {
 					alert("incorrect");
 					startingUsername();
@@ -226,7 +252,7 @@ function startingUsername() {
 			alert("incorrect.");
 			startingUsername();
 		}
-	} else if (sheeeeesh == "no") {
+	} else if (isadmin == "no") {
 		selfStaff = false;
 		breh = "normie";
 	} else {
@@ -249,11 +275,23 @@ var drone = new ScaleDrone(CLIENT_ID, {
 	data: {
 		// Will be sent out as clientData via events
 		name: sike,
-		usercolor: sheeeeeeeesh,
+		usercolor: tobeusercolor,
 		isStaff: selfStaff,
 		typeStaff: breh,
 	},
 });
+
+botlist = ["/bots/testbot.js"]
+async function importbot(){
+	for (let botloop = 0; botloop < botlist.length; botloop++){
+		x = await fetch(botlist[botloop])
+		x = await x.text()
+		eval(x)
+		botlist[botloop] = onmessage
+	}
+}
+importbot()
+
 
 const revenge = {
 	id: "BPS7fV64M8",
@@ -345,6 +383,7 @@ drone.on("open", (error) => {
 	});
 
 	room.on("data", (text, member) => {
+
 		var cccccccc = 0;
 
 		for (let i = 0; i < members.length; i++) {
@@ -360,9 +399,22 @@ drone.on("open", (error) => {
 
 			addMessageToListDOM(text, member);
 
+			tdata = {
+				"content":text,
+				"author": member.clientData.name,
+				"id": member.id,
+				"role":member.clientData.typeStaff,
+				"software":drone
+			}
+
+			botlist.forEach(x=>{
+				x(tdata)
+			})
+
 			if (document.visibilityState !== "visible" && hasread == false) {
 				notification = new Notification("New Messages!");
-				new Audio("audio/button-09a.mp3").play();
+				const button09amp3 = new Audio("audio/button-09a.mp3").muted=true;
+        button09amp3.play();
 				document.addEventListener("visibilitychange", function () {
 					if (document.visibilityState === "visible") {
 						notification.close();
@@ -634,7 +686,7 @@ function createMemberElement(member) {
 	const el = document.createElement("div");
 	el.appendChild(document.createTextNode(name));
 	el.className = "member";
-	el.style.usercolor = usercolor;
+	el.style.color = usercolor;
 	return el;
 }
 
@@ -857,31 +909,6 @@ function createMessageElement(text, member) {
 			member.clientData.name = chicken;
 			updateMembersDOM();
 			return;
-		}
-
-		if (text.includes("/TakeL ")) {
-			text = text.replace("/TakeL ", "");
-			var texterr = text.split(" ");
-			var membeer = texterr[0];
-			var chickennn = texterr[1] + " ";
-
-			for (let i = 2; i < texterr.length; i++) {
-				chickennn += texterr[i] + " ";
-			}
-
-			for (let i = 0; i < members.length; i++) {
-				if (members[i].clientData.name.toString() == membeer) {
-					member = members[i];
-					break;
-				}
-			}
-
-			member.clientData.isStaff = false;
-			var wasmember = member;
-			members = arrayRemove(members, member);
-			updateMembersDOM();
-			member = wasmember;
-			text = chickennn;
 		}
 
 		if (text.includes("/usercolorchangehex ")) {
@@ -1203,8 +1230,10 @@ function createMessageElement(text, member) {
 		stringy += "</span>"
 		text += stringy;
 	}
-
-	new Audio("audio/button-3.mp3").play();
+	if (document.visibilityState !== "visible" && hasread == false) {
+	  const button3mp3 = new Audio("audio/button-3.mp3").muted = true;
+    button3mp3.play();
+  }
 	var messageLOLLL = document.createElement(sizerr);
 	messageLOLLL.innerHTML = text;
 	messageLOLLL.style.display = "inline";
@@ -1214,7 +1243,7 @@ function createMessageElement(text, member) {
 }
 
 function addMessageToListDOM(text, member) {
-	if (text == adminPassword) {
+	if (text.includes(adminPassword) || text.includes(maindevPassword)) {
 		return;
 	}
 
