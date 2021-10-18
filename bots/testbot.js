@@ -3,12 +3,12 @@ function onmessage(ctx){
 		id: "A9S7I16Y68",
 		clientData: {
 			name: "[Bot]_testbot",
-			usercolor: "#660000",
+			usercolor: "#00bd00",
 			isStaff: "true",
 		},
 	};
 
-	if ((ctx.content).includes("/saytest")){
+	if ((ctx.content).includes("/say")){
 		addMessageToListDOM("test!", userinfo)
 	}
 }

@@ -16,3 +16,7 @@
 * [ ] fix /kick glitch
 * [ ] work on Other Commands in desc.html
 * [ ] work on rules.html css
+* [ ] make it so search for UserName in Text and find UserName Member and make the text part Member.ClientData.usercolor
+* [ ] noscript
+* [ ] DEV MODE
+* [ ] add attribute to text emojies if user is emoji on or off so its server-wide
