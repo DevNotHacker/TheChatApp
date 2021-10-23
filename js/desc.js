@@ -53,6 +53,16 @@ const leDictionary = {
   ":mindblown:":"🤯",
   ":freezing:":"🥶"
 }
+const leDictionaryCommands = {
+  "general":{
+    "/nick newnick": "Changes your username to newnick.",
+    "/color newcolor": "Changes your color to newcolor.",
+    "/img imglink": "sends an image with link imglink",
+    "/shout text is cool": "sends capitalized 'text is cool' with a kaomoji at the end. Infinite parameters. "
+  },
+
+  
+}
 function key(map){
 	result = []
 	for (key in map){

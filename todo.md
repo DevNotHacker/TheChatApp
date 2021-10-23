@@ -14,9 +14,14 @@
 #### Other
 ---
 * [ ] fix /kick glitch
-* [ ] work on Other Commands in desc.html
-* [ ] work on rules.html css
+* [ ] work on Other Commands in desc.html Matthew is working on this...
+* [x] work on rules.html css
 * [ ] make it so search for UserName in Text and find UserName Member and make the text part Member.ClientData.usercolor
-* [ ] noscript
+* [x] noscript
 * [ ] DEV MODE
 * [ ] add attribute to text emojies if user is emoji on or off so its server-wide
+* [x] Color visulizer
+* [ ] "I don't have my own admin password"
+* [ ] Make Rules.html have url params so if admin it knows
+* [ ] banning ips (only devs)
+* [ ] dev rank is [Banana] + devcommands = [VIP_Admin] + BananaCommands + devcommands

@@ -5,14 +5,13 @@
 		<meta name="viewport" content="width=device-width" />
 		<meta name="description" content="Chat App :)" />
 		<title>Chat</title>
-		<link rel="icon" href="favicon.jpg" type="image/jpg" />
+		<link rel="icon" href="/assets/favicon.jpg" type="image/jpg" />
 		<script
 			type="text/javascript"
 			src="https://cdn.scaledrone.com/scaledrone.min.js"
 		></script>
-    <script src="https://thechatappStaffInfo.cookiesnowowl.repl.co/script.js"></script>
-    <link rel="stylesheet" href="/style.css">
-		<script src="/script.js" type="text/javascript" defer></script>
+		<script src="https://thechatappStaffInfo.cookiesnowowl.repl.co/script.js"></script>
+		<link rel="stylesheet" href="/css/style.css">
 	</head>
 
 	<body>
@@ -30,7 +29,7 @@
 					</select>
 					<div id="adminpswenter" class="hide" style="margin-left:100px;">
 						<label for="adminpsw">Admin Password: </label>
-						<input type="text" disabled required name="adminpsw" autocomplete="off" placeholder="Admin Password" id="qadminpsw" onkeyup="validate()"><br>
+						<input type="password" disabled required name="adminpsw" autocomplete="off" placeholder="Admin Password" id="qadminpsw" onkeyup="validate()"><br>
 						<!--<label for="adminname">My Name Is: </label>
 						<select name="adminname" id="qadminname" required disabled>
 							<option value="staff" selected>Staff</option>
@@ -45,8 +44,8 @@
 					</div>
 					<br>
 					<label for="color">User color: </label>
-					<input type="color" name="color" value="#000000" id="choosecolor" required>
-					<span onclick="document.getElementById('choosecolor').value = getRandomusercolor()" style="user-select: none;cursor: pointer;">Random</span>
+					<input type="color" name="color" value="#000000" id="choosecolor" required oninput="validate()">
+					<span onclick="document.getElementById('choosecolor').value = getRandomusercolor();validate()" style="user-select: none;cursor: pointer;">Random</span>
 					<br>
 					<label for="textsize">Text Size: </label>
 					<select name="textsize" required id="choosetextsize">
@@ -57,15 +56,27 @@
 						<option value="h5">5</option>
 						<option value="h6">6</option>
 					</select><br>
-					See what the selected text size looks like!<br>
+					<label>I have read the <a href="/rules.html" target="_blank">rules</a></label><input type="checkbox" onchange="validate()" id="qreaddarules">
+					<br>
+					See What the selected mode looks like! (Theme: 
+					<span style="cursor:pointer;user-select:none;background:lightcoral;" onclick="document.getElementById('textsizepreview').style.background = 'lightcoral';document.getElementById('textsizepreview').style.color = 'black'">Red</span> 
+					<span style="cursor:pointer;user-select:none;background:palegoldenrod;" onclick="document.getElementById('textsizepreview').style.background = 'palegoldenrod';document.getElementById('textsizepreview').style.color = 'black'">Yellow</span> 
+					<span style="cursor:pointer;user-select:none;background:powderblue;" onclick="document.getElementById('textsizepreview').style.background = 'powderblue';document.getElementById('textsizepreview').style.color = 'black'">Regular</span> 
+					<span style="cursor:pointer;user-select:none;background:mediumseagreen;" onclick="document.getElementById('textsizepreview').style.background = 'mediumseagreen';document.getElementById('textsizepreview').style.color = 'black'">Green</span> 
+					<span style="cursor:pointer;user-select:none;background:whitesmoke;" onclick="document.getElementById('textsizepreview').style.background = 'whitesmoke';document.getElementById('textsizepreview').style.color = 'black'">Snowy</span> 
+					<span style="cursor:pointer;user-select:none;background: black;color: white;" onclick="document.getElementById('textsizepreview').style.background = 'black';document.getElementById('textsizepreview').style.color = 'white'">Dark</span>
+					)<br>
 					<h1 id="textsizepreview">
-						The Quick Brown Fox Jumped Over The Lazy Dog
+						<span id="unamecolorq">Chat_App_Tester</span> Quick Brown Fox Jumped Over The Lazy Dog
 					</h1>
 					<br>
-					<br>
-					<br>
 					<input type="submit" disabled><br>
+					<br>
+					<br>
 					<b><span id="errmsg" style="color:red;font-size:18px;">Awaiting error message</span></b>
+					<br>
+
+					<span onclick="qmodalc = this.parentElement.parentElement;qmodalc.style.transform = 'translate(0px, 0px)', qmodalc.style.position = 'static'">Small Screen Mode</span>
 				</form>
 			</div>
 		</div>
@@ -79,7 +90,7 @@
 				MainDev(Main Developer, matthew)<br>HeadAdmin: Timothy<br>Jeffr3y(moderator)<br>
 				Idea-Creator: Eric<br>Dev: Andrew
 			</h3>
-			<div class="members-list">Loading</div>
+			<div class="members-list">Wating For Server</div>
 
 			<br /><a target="_blank" rel="noopener" href="desc.html" class="aaaa looksnicesoyeah"
 				>Commands</a
@@ -89,6 +100,7 @@
 				href="rules.html"
 				class="aaaa looksnicesoyeah"
 				rel="noopener"
+				id="ruleslink"
 				>Rules</a
 			><br /><br />
 			<div id="butttons">
@@ -134,5 +146,17 @@
 				/><input class="message-form__button" value="Send" type="submit" />
 			</form>
 		</div>
+
+
+		<noscript>
+			<div class="modal">
+				<div class="modal-content" style="text-align: center;font-size:28px;">
+					<u><b><h1>Wait!</h1></b></u>
+					<br>
+					Uh oh. It looks like you have disabled JavaScript on this webpage. This is a web-chat, which means that this heavily relies on JavaScript to send and display messages. Therefore, you are basically ridding this chat of all its usefullness. <u><span style="background:yellow;">This is why, if you want the chat to accually work, please enable JavaScript.</span></u>
+				</div>
+			</div>
+		</noscript>
+		<script src="/js/script.js" type="text/javascript" defer></script>
 	</body>
 </html>

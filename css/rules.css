@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Georama&display=swap');
+h1{
+	text-align: center;
+}
+*{
+	font-family: 'Georama', sans-serif;
+}
+#middle{
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	height: 50px;
+	font-size: 24px;
+}
+body{
+	font-size: 20px;
+	font-weight:200;
+}
+li{
+	color: gray;
+}
+b, h1{
+	font-weight: 900;
+	color: black;
+}

@@ -44,11 +44,11 @@ body {
 .members-count,
 .members-list,
 .messages {
-	border: 3px solid white;
 	padding: 15px;
 	margin-bottom: 15px;
 	resize: vertical;
 	height: auto;
+	box-shadow: 0 0 16px;
 }
 
 .messages {
@@ -141,7 +141,7 @@ input:focus {
 	/*text-align: justify;*/
 	/*min-width: 45em;*/
 	padding: 16px;
-	box-shadow: 0 0 5px;
+	box-shadow: 0 0 16px;
 	margin: 1em;
 	border-radius: 0.25em;
 	background-color: transparent;
@@ -219,9 +219,10 @@ input:focus {
 }
 
 #textsizepreview{
-	color: black !important;
+	padding: 20px;
 	margin: 8px 0px;
 	display: inline-block;
+	background: powderblue;
 }
 
 #questions select, #questions input{
@@ -304,4 +305,8 @@ input[type="submit"]:disabled{
 }
 .hide{
 	display: none;
+}
+.members-list ::marker{
+	color: var(--mColor);
+	font-size: 24px;
 }

