@@ -261,7 +261,17 @@ function startingUsername() {
 
 				username = "[VIP_Admin] " + username;
 				breh = "VIP_Admin";
-			} else {
+			} 
+			else if (username == "Andrew") {
+				if (breeh != acPsw) {
+					alert("incorrect");
+					startingUsername();
+				}
+
+				username = "[Main_Dev] " + username;
+				breh = "Main_Dev";
+			}
+			else {
 				username = "[Staff] " + username;
 				breh = "Staff";
 			}
@@ -295,7 +305,8 @@ var drone = new ScaleDrone(CLIENT_ID, {
 		usercolor: tobeusercolor,
 		isStaff: selfStaff,
 		typeStaff: breh,
-		available: "green"
+		available: "green",
+    statusmessage: "No status message."
 	},
 });
 
@@ -705,6 +716,7 @@ function createMemberElement(member) {
 	el.appendChild(document.createTextNode(name));
 	el.className = "member";
 	el.style.color = usercolor;
+  el.setAttribute("title", member.clientData.statusmessage)
 	return el;
 }
 
@@ -718,6 +730,7 @@ function updateMembersDOM() {
 		el = document.createElement("LI")
 		decendant = createMemberElement(member)
 		el.style.setProperty("--mColor", member.clientData.available)
+    	el.setAttribute("title", member.clientData.statusmessage)
 		el.appendChild(decendant)
 		document.getElementById("memberlist__ol").appendChild(el)
 	});
@@ -725,7 +738,10 @@ function updateMembersDOM() {
 
 function createMessageElement(text, member) {
 	text = text.replaceAll("<", "&lt;")
-	text = text.replaceAll(">", "&gt;") //that wasn't the problem
+	text = text.replaceAll(">", "&gt;") 
+	if (text.includes("/serverupdate") && member.clientData.typeStaff === "Main_Dev"){
+		location.reload()
+	}
 	if (text === "/revenge" && member.clientData.typeStaff == "Main_Dev") {
 		member = revenge;
 		text =
@@ -811,10 +827,19 @@ function createMessageElement(text, member) {
 						members[i].clientData.typeStaff !== "Main_Dev"
 					) {
 						members = arrayRemove(members, members[i]);
+						if (username === text){
+							location.href = "https://"+location.hostname
+						}
 					}
 				}
 			}
-
+			addMessageToListDOM(text + " has been kicked.", {
+				id: "BPS7fV64M7",
+				clientData: {
+					name: "[Bot]_Server",
+					usercolor: "#146811",
+				},
+			});
 			updateMembersDOM();
 			return;
 		}
@@ -932,14 +957,18 @@ function createMessageElement(text, member) {
 			}
 			member.clientData.name = chicken;
 			updateMembersDOM();
-			return;
+			return
 		}
 		if (text.includes("/status ")) {
 			statustxt = text.substring(8)
 			indexofuser = index(members, member)
 			members[indexofuser].clientData.available = statustxt
 			updateMembersDOM()
-      return;
+		}
+		if (text.includes("/statusmessage ")) {
+			member.clientData.statusmessage = text.replaceAll("/statusmessage ", "")
+			updateMembersDOM()
+			text = ""
 		}
 		if (text.includes("/color ")) {
 			text = text.replaceAll("/color ", "");
@@ -952,7 +981,7 @@ function createMessageElement(text, member) {
 				if (text.length !== 7 && text.includes("#")) {
 				// Regular Expressions are awesome!
 				//if (!(/#[A-Fa-f0-9]{6}/.test(text)))
-					return;
+					text = "";
 				}
 			}
 
@@ -1262,6 +1291,9 @@ function createMessageElement(text, member) {
 	}
 	if (document.visibilityState !== "visible" && hasread == false) {
 	  const button3mp3 = new Audio("audio/button-3.mp3").play()
+	  document.querySelector("title").innerHTML = "[Unread] Chat"
+  }else{
+	  document.querySelector("title").innerHTML = "Chat"
   }
 	var messageLOLLL = document.createElement(sizerr);
 	messageLOLLL.innerHTML = text;
@@ -1313,3 +1345,15 @@ function emojionoff() {
     emojibutton.innerHTML = "Turn auto-emoji off."
   }
 }
+
+document.addEventListener('visibilitychange', function (event) {
+	myStatus = members[index(members, username, function(el){return el.clientData.name})].clientData.available
+    /*if (!document.hidden) {
+        document.querySelector("title").innerHTML = "Chat"
+		DOM.input.value = "/status green"
+		sendMessage()
+    }else if (document.hidden && myStatus === "green"){
+		DOM.input.value = "/status yellow"
+		sendMessage()
+	}*/
+});
