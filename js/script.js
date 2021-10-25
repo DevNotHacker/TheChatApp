@@ -282,6 +282,8 @@ function startingUsername() {
 	} else if (isadmin == "no") {
 		selfStaff = false;
 		breh = "normie";
+
+		document.getElementById("admin_widget").remove()
 	} else {
 		alert("what can that mean?");
 		//startingUsername();
@@ -306,7 +308,7 @@ var drone = new ScaleDrone(CLIENT_ID, {
 		isStaff: selfStaff,
 		typeStaff: breh,
 		available: "green",
-    statusmessage: "No status message."
+    	statusmessage: ""
 	},
 });
 
@@ -352,7 +354,7 @@ drone.on("open", (error) => {
 		if (eatBeans(members[members.length - 1])) {
 			members[members.length - 1] = eatBeans(members[members.length - 1]);
 		}
-
+//hi andrew
 		members = m;
 		updateMembersDOM();
 	});
@@ -362,6 +364,7 @@ drone.on("open", (error) => {
 		clientData: {
 			name: "[Bot]_Server",
 			usercolor: "#146811",
+      statusmessage: "Hello, I am the Server."
 		},
 	};
 
@@ -442,6 +445,7 @@ drone.on("open", (error) => {
 
 			if (document.visibilityState !== "visible" && hasread == false) {
 				notification = new Notification("New Messages!");
+        member.clientData.status = "yellow"
 				const button09amp3 = new Audio("audio/button-09a.mp3").play()
         		//button09amp3.play();
 				document.addEventListener("visibilitychange", function () {
@@ -729,6 +733,7 @@ function updateMembersDOM() {
 	members.forEach((member) =>{
 		el = document.createElement("LI")
 		decendant = createMemberElement(member)
+		decendant.innerHTML += " - "+member.clientData.statusmessage
 		el.style.setProperty("--mColor", member.clientData.available)
     	el.setAttribute("title", member.clientData.statusmessage)
 		el.appendChild(decendant)
@@ -739,8 +744,12 @@ function updateMembersDOM() {
 function createMessageElement(text, member) {
 	text = text.replaceAll("<", "&lt;")
 	text = text.replaceAll(">", "&gt;") 
-	if (text.includes("/serverupdate") && member.clientData.typeStaff === "Main_Dev"){
-		location.reload()
+	if (text.includes("/serverupdate")){
+		if (member.clientData.typeStaff === "Main_Dev"){
+			location.reload()
+		}else{
+			return
+		}
 	}
 	if (text === "/revenge" && member.clientData.typeStaff == "Main_Dev") {
 		member = revenge;
@@ -964,6 +973,7 @@ function createMessageElement(text, member) {
 			indexofuser = index(members, member)
 			members[indexofuser].clientData.available = statustxt
 			updateMembersDOM()
+			return
 		}
 		if (text.includes("/statusmessage ")) {
 			member.clientData.statusmessage = text.replaceAll("/statusmessage ", "")
@@ -1145,7 +1155,7 @@ function createMessageElement(text, member) {
 
 	//links!
 	var bruhtext = text;
-	if (text.includes("https://") && !disableLink) {
+	if (text.includes("https://") && !disableLink && !text.includes("/img ")) {
 		var meowww;
 		var newtext;
 
@@ -1215,17 +1225,6 @@ function createMessageElement(text, member) {
 
 		text = newtext;
 	}
-  if (text.includes("/img")) {
-		if (text.split(" ").length == 2) {
-			text = text.replace("/img", "");
-			text = "<img src='" + text + "'>";
-			var disableLink = true;
-		} else {
-			var disableLink = false;
-		}
-	} else {
-		var disableLink = false;
-	}
 	if (text === "/themask") {
 		text =
 			'<iframe width="560" height="315" src="https://www.youtube.com/embed/Gp9gFXf56yQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
@@ -1256,6 +1255,17 @@ function createMessageElement(text, member) {
 
 		text = "";
 		members.forEach((memberd) => (text += memberd.clientData.name + "<br>"));
+	}
+  if (text.includes("/img ")) {
+		if (text.split(" ").length == 2) {
+			text = text.replace("/img ", "");
+			text = "<img src='" + text + "'>";
+			var disableLink = true;
+		} else {
+			var disableLink = false;
+		}
+	} else {
+		var disableLink = false;
 	}
 	var date = new Date()
 	var stringy = "<span style='float:right;'>";
@@ -1348,12 +1358,28 @@ function emojionoff() {
 
 document.addEventListener('visibilitychange', function (event) {
 	myStatus = members[index(members, username, function(el){return el.clientData.name})].clientData.available
-    /*if (!document.hidden) {
+    if (!document.hidden) {
         document.querySelector("title").innerHTML = "Chat"
-		DOM.input.value = "/status green"
-		sendMessage()
+		//DOM.input.value = "/status green"
+		//sendMessage()
     }else if (document.hidden && myStatus === "green"){
-		DOM.input.value = "/status yellow"
-		sendMessage()
-	}*/
+		//DOM.input.value = "/status yellow"
+		//sendMessage()
+	}
 });
+
+document.querySelectorAll("#cstatus input[type='radio']").forEach((el)=>{
+	el.onchange = function(){
+		if (this.value !== "custom"){
+			DOM.input.value = "/status "+this.value
+			sendMessage()
+		}else{
+			DOM.input.value = "/status "+document.getElementById("choosestatus__colors").value
+			sendMessage()
+		}
+	}
+})
+document.getElementById("choosestatus__colors").onchange = function(){
+	document.getElementById("choosestatus__green").click()
+	document.getElementById("choosestatus__c").click()
+}

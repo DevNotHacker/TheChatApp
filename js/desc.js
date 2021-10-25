@@ -1,4 +1,4 @@
-/*
+/*hi andrew
   text = text.replaceAll(">:(", "😠");
     text = text.replaceAll(">:)", "😈");
     if (text.includes(":)")) {
@@ -58,9 +58,15 @@ const leDictionaryCommands = {
     "/nick newnick": "Changes your username to newnick.",
     "/color newcolor": "Changes your color to newcolor.",
     "/img imglink": "sends an image with link imglink",
-    "/shout text is cool": "sends capitalized 'text is cool' with a kaomoji at the end. Infinite parameters. "
+    "/shout text is cool": "sends capitalized 'text is cool' with a kaomoji at the end. Infinite parameters. ",
+    "/status color": "sets your status to color",
+    "/statusmessage hello there this is a status message": "sets your status message to hello there this is a status message"
   },
-
+  "admin":{
+    "/kick person":"kicks person",
+    "/sudo person test string":"makes person say test string",
+    
+  }
   
 }
 function key(map){

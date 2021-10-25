@@ -43,7 +43,9 @@ body {
 
 .members-count,
 .members-list,
-.messages {
+#admin_widget,
+.messages,
+#cstatus {
 	padding: 15px;
 	margin-bottom: 15px;
 	resize: vertical;
@@ -131,9 +133,10 @@ input:focus {
     width: 130px;
     height: 80px;
     border-radius: 8px;
-    margin: 10px;
+    margin: 0 auto;
     font-size: 16px;
     box-shadow: 0 0 8px;
+    margin-left: 10px;
 }
 
 
@@ -309,4 +312,29 @@ input[type="submit"]:disabled{
 .members-list ::marker{
 	color: var(--mColor);
 	font-size: 24px;
+}
+ol#memberlist__ol div.member{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+div#cstatus ul li::marker{
+	color: var(--c);
+	font-size:24px;
+}
+li.del::marker{
+	color: black !important;
+}
+li.del input{
+	background: transparent;
+	outline: none;
+	border: 1px solid white;
+	padding: 5px;
+	filter: contrast(0.1);
+	border-radius: 3px;
+	margin: 5px;
+	color: inherit;
+}
+#cstatus, #cstatus ul, #cstatus li{
+	color: inherit;
 }

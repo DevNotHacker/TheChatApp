@@ -91,18 +91,23 @@
 				Idea-Creator: Eric<br>Dev: Andrew
 			</h3>
 			<div class="members-list">Wating For Server</div>
-
-			<br /><a target="_blank" rel="noopener" href="desc.html" class="aaaa looksnicesoyeah"
-				>Commands</a
-			><br /><a
-				target="_blank"
-				rel="noopener"
-				href="rules.html"
-				class="aaaa looksnicesoyeah"
-				rel="noopener"
-				id="ruleslink"
-				>Rules</a
-			><br /><br />
+			<br />
+			<div style="display: flex">
+				<a target="_blank" rel="noopener" href="desc.html" class="aaaa looksnicesoyeah"
+				style="float:left;text-align:center;">Commands</a>
+				<a
+					target="_blank"
+					rel="noopener"
+					href="rules.html"
+					class="aaaa looksnicesoyeah"
+					rel="noopener"
+					id="ruleslink"
+					style="text-align:right;"	
+					>Rules
+				</a>
+				<button onclick="leave()" class="looksnicesoyeah" style="float:right">Leave</button>
+			</div>
+			<br /><br />
 			<div id="butttons">
 				<h1 style="color: black ">Theme:</h1>
 				<button class="abutton" id="bgred" onclick="backgroundRed();document.cookie = 'bg='+this.id+'; expires=31 Dec 3000 12:00:00 UTC; path=/';" style="--color:lightcoral;">Red</button>
@@ -115,12 +120,51 @@
 
 				<button class="abutton" id="bgdark" onclick="backgroundBlack();document.cookie = 'bg='+this.id+'; expires=31 Dec 3000 12:00:00 UTC; path=/';" style="--color:black;color: white;">Dark</button>
 			</div>
-			<br /><br /><button onclick="leave()" class="looksnicesoyeah">Leave</button
-			><br /><br /><button
+			<br />
+			<div id="cstatus">
+				<h1>Choose a status!</h1>
+				<ul>
+					<li style="--c:green">
+						<input type="radio" name="cstatus" value="green" id="choosestatus__green" checked>
+						<label for="choosestatus__green">Avaliable</label>
+					</li>
+					<li style="--c:yellow">
+						<input type="radio" name="cstatus" value="yellow" id="choosestatus__afk">
+						<label for="choosestatus__afk">Away from chat</label>
+					</li>
+					<li style="--c:blue">
+						<input type="radio" name="cstatus" value="blue" id="choosestatus__brb">
+						<label for="choosestatus__brb">Be right back</label>
+					</li>
+					<li style="--c:red">
+						<input type="radio" name="cstatus" value="red" id="choosestatus__dnd">
+						<label for="choosestatus__dnd">Do Not Disturb</label>
+					</li>
+					<li style="--c:white">
+						<input type="radio" name="cstatus" value="custom" id="choosestatus__c">
+						<label for="choosestatus__c">Custom</label>
+						<input type="color" id="choosestatus__colors">
+					</li>
+					<li class="del">
+						<input type="text" placeholder="Set a text status!">
+					</li>
+				</ul>
+			</div>
+			<br>
+			<br>
+			<div id="admin_widget">
+				<h1><b>NOTICE!</b><br>Authorized Personnel Only</h1>
+				<br>
+				<button onclick="DOM.input.value='/serverupdate';sendMessage()" class="looksnicesoyeah">Refresh Everyone</button>
+				<br>
+			</div>
+			<br /><br /><br />
+			<button
 				onclick="emojionoff()"
 				class="looksnicesoyeah"
-		id="emojibutton">
-		Turn auto-emojies off.
+				id="emojibutton"
+			>
+				Turn auto-emojies off.
 			</button>
 		</aside>
 
