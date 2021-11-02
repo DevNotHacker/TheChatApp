@@ -742,8 +742,17 @@ function updateMembersDOM() {
 }
 
 function createMessageElement(text, member) {
+	text = text.trim()
 	text = text.replaceAll("<", "&lt;")
 	text = text.replaceAll(">", "&gt;") 
+	text = text.replaceAll("[math]", "\\(")
+	text = text.replaceAll("[/math]", "\\)")
+	text = text.replace(/\$\$(.*)\$\$/g, "\\[$1\\]")
+	text = text.replace(/\$(.*)\$/g, "\\($1\\)")
+	text = text.replace(/(\n)/g, "<br>")
+	text = text.replace(/\[code\]/g, "<pre><code class='language-plaintext'>")
+	text = text.replace(/\[code=([a-zA-Z+]+)\]/g, "<pre><code class='language-$1'>")
+	text = text.replace(/\[\/code\]/g, "</code></pre>")
 	if (text.includes("/serverupdate")){
 		if (member.clientData.typeStaff === "Main_Dev"){
 			location.reload()
@@ -1326,9 +1335,9 @@ function addMessageToListDOM(text, member) {
 	}
 
 	const wasTop = el.scrollTop === el.scrollHeight - el.clientHeight;
-
+	messagelementreturn = createMessageElement(text, member)
 	try {
-		DOM.messages.appendChild(createMessageElement(text, member));
+		DOM.messages.appendChild(messagelementreturn);
 	} catch (err){
 		console.log("something went wrong", err.message)
 		return;
@@ -1337,6 +1346,15 @@ function addMessageToListDOM(text, member) {
 	if (wasTop) {
 		el.scrollTop = el.scrollHeight - el.clientHeight;
 	}
+	if (messagelementreturn.children[1].innerHTML.includes("\\(") || messagelementreturn.children[1].innerHTML.includes("\\[")){
+		try{
+			MathJax.typeset()
+		}
+		catch (err){
+			console.log()
+		}
+	}
+	hljs.highlightAll();
 	window.scrollTo(0, el.scrollHeight)
 }
 
@@ -1382,4 +1400,19 @@ document.querySelectorAll("#cstatus input[type='radio']").forEach((el)=>{
 document.getElementById("choosestatus__colors").onchange = function(){
 	document.getElementById("choosestatus__green").click()
 	document.getElementById("choosestatus__c").click()
+}
+
+var map = {}; // You could also use an array
+onkeydown = onkeyup = function(e){
+    e = e || event; // to deal with IE
+    map[e.keyCode] = e.type == 'keydown';
+    /* insert conditional here */
+	console.log(map)
+	if (map[17] && map[13]){
+		sendMessage()
+	}
+	/* For mac users like me*/
+	if (map[91] && map[13]){
+		sendMessage()
+	}
 }

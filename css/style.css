@@ -5,7 +5,10 @@ body {
 	padding: 0px;
 	font-family: 'Georama', sans-serif;
 }
-*{
+/**{
+	font-family: 'Georama', sans-serif;
+}*/
+textarea{
 	font-family: 'Georama', sans-serif;
 }
 @keyframes slidein {
@@ -38,7 +41,7 @@ body {
 	display: flex;
 	flex-direction: row;
 	min-height: 100vh;
-	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+	/*font-family: -apple-system, BlinkMacSystemFont, sans-serif;*/
 }
 
 .members-count,

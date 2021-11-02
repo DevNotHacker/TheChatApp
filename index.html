@@ -12,6 +12,11 @@
 		></script>
 		<script src="https://thechatappStaffInfo.cookiesnowowl.repl.co/script.js"></script>
 		<link rel="stylesheet" href="/css/style.css">
+		<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+		<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+		<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
 	</head>
 
 	<body>
@@ -87,7 +92,7 @@
 				<br>
 				<br>
 				Check the rules., Check out the <a href="https://discord.gg/B5Yn9FdR" target="_blank" style="color: inherit;">Discord!</a><br>Staff:<br>
-				MainDev(Main Developer, matthew)<br>HeadAdmin: Timothy<br>Jeffr3y(moderator)<br>
+				MainDev(Main Developer, matthew)<br>Andrew(Main Developer, andrew)<br>HeadAdmin: Timothy<br>Jeffr3y(moderator)<br>
 				Idea-Creator: Eric<br>Dev: Andrew
 			</h3>
 			<div class="members-list">Wating For Server</div>
@@ -180,14 +185,15 @@
 				onsubmit="return false;"
 				oncontextmenu="return true"
 			>
-				<input
+				<textarea
 					class="message-form__input"
 					placeholder="Type a message.."
 					type="text"
 					maxlength="100000"
 					contenteditable
 					spellcheck="true"
-				/><input class="message-form__button" value="Send" type="submit" />
+					style="height:20px;"
+				/></textarea><input class="message-form__button" value="Send" type="submit" />
 			</form>
 		</div>
 
