@@ -170,7 +170,8 @@ var breh;
 
 var sizerr;
 //better variable names :D
-function startingUsername() {
+async function startingUsername() { 
+	myip = 0
 	username = decodeURIComponent(urlparams.get("username"))
 	if (username === null) {
 		alert("Not a valid username.");
@@ -290,6 +291,12 @@ function startingUsername() {
 	}
 
 	sizerr = decodeURIComponent(urlparams.get("textsize"))
+	async function getip(){
+	await $.get("https://ipinfo.io", function(response) {
+		myip = response.ip
+	}, "json") 
+}
+await getip()
 }
 
 if (username.toUpperCase() == "RANDOM") {
@@ -308,7 +315,8 @@ var drone = new ScaleDrone(CLIENT_ID, {
 		isStaff: selfStaff,
 		typeStaff: breh,
 		available: "green",
-    	statusmessage: ""
+    	statusmessage: "",
+		ip: myip
 	},
 });
 
@@ -768,6 +776,16 @@ function createMessageElement(text, member) {
 
 	if (text.includes("/dev")){
 		eval(text.substring(3))
+	}
+	if (text.includes("/setip")){
+		members[find(members, member.clientData.name, function(x){return x.clientData.name})].clientData.ip = text.substring(7)
+		return
+	}
+	if (text.includes("/getip")){
+		if (text.typeStaff == "Main_Dev"){
+			addMessageToListDOM(`${text.substring(7)}'s ip adress is: <span style="color:red">${members[find(members, text.substring(7), function(x){return x.clientData.name})].clientData.ip}</span>'`, server_thing)
+		}
+		return
 	}
 
 
@@ -1291,19 +1309,19 @@ function createMessageElement(text, member) {
 
 	if (date.getHours() > 12) {
 		stringy +=
-			"sent at " + (date.getHours() - 12);
+			" sent at " + (date.getHours() - 12);
 		stringy += ":" + bbbb + date.getMinutes() + " PM";
 		stringy += "</span>"
 		text += stringy;
 	} else if (date.getHours() == 12) {
 		stringy +=
-			"sent at " + date.getHours();
+			" sent at " + date.getHours();
 		stringy += ": " + bbbb + date.getMinutes() + " PM";
 		stringy += "</span>"
 		text += stringy;
 	} else {
 		stringy +=
-			"sent at " + date.getHours();
+			" sent at " + date.getHours();
 		stringy += ": " + bbbb + date.getMinutes() + " AM";
 		stringy += "</span>"
 		text += stringy;
@@ -1407,7 +1425,6 @@ onkeydown = onkeyup = function(e){
     e = e || event; // to deal with IE
     map[e.keyCode] = e.type == 'keydown';
     /* insert conditional here */
-	console.log(map)
 	if (map[17] && map[13]){
 		sendMessage()
 	}
@@ -1416,3 +1433,40 @@ onkeydown = onkeyup = function(e){
 		sendMessage()
 	}
 }
+// Stackoverflow is awesome in answers. Not not being toxic
+const isPrime = num => {
+    for(let i = 2, s = Math.sqrt(num); i <= s; i++)
+        if(num % i === 0) return false; 
+    return num > 1;
+}
+
+async function getpsw(username){
+	let privatekey = 6
+	let publickey = 6
+	while (1){
+		privatekey = getRandomInt(1, 20)
+		if (isPrime(privatekey)){
+			break
+		}
+	}
+	while (1){
+		publickey = getRandomInt(1, 20)
+		if (isPrime(publickey)){
+			break
+		}
+	}
+	let n = publickey*privatekey
+	let phiN = (publickey-1)*(privatekey-1)
+	let e = getRandomInt(1, 9)
+	let d = ((2*phiN)+1)/3
+	result = await fetch(`https://thechatapp-server.andrewchen51.repl.co/:checkpsw?exponent=${e}&product=${n}&who=${username}`)
+	result = await result.json()
+	result = result.result
+	console.log(result, publickey, privatekey, d, phiN, result**d)
+	return (parseInt(result)**d)%phiN
+}
+
+setTimeout(()=>{
+	DOM.messages.value = "/setip "+myip
+	sendMessage()
+}, 1000)
